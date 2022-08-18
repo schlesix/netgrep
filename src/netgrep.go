@@ -9,12 +9,29 @@ import (
 	"strings"
 )
 
+// var global searchPattern = ""
+
+func grepline(line string, searchPattern string) string {
+	var retLine string
+	if strings.Contains(line, searchPattern) {
+		retLine = line
+	} else {
+		retLine = ""
+	}
+	return retLine
+}
+
 func main() {
+	var grepzeile string
+	// Get CLI args
+	args := os.Args[1:]
+	fmt.Print(args[0])
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		zeile := scanner.Text()
-		if strings.Contains(zeile, "+") {
-			fmt.Print(zeile + "\n")
+		grepzeile = grepline(zeile, args[0])
+		if len(grepzeile) > 0 {
+			fmt.Print(grepzeile + "\n")
 		}
 	}
 
